@@ -28,10 +28,28 @@
                     "transform": "scaleX(1) scaleY(1)",
                     "opacity": "1"
                   }
+                },
+                "expand-bar-x": {
+                  "0%, 100%": {
+                    "transform": "scaleX(0.05)"
+                  },
+                  "50%": {
+                    "transform": "scaleX(1)"
+                  }
+                },
+                "expand-bar-y": {
+                  "0%, 100%": {
+                    "transform": "scaleY(0.05)"
+                  },
+                  "50%": {
+                    "transform": "scaleY(1)"
+                  }
                 }
               },
               "animation": {
-                "expand-bar": "expand-bar 0.4s ease-out forwards"
+                "expand-bar": "expand-bar 0.4s ease-out forwards",
+                "loading-bar-x": "expand-bar-x 2s linear infinite forwards",
+                "loading-bar-y": "expand-bar-y 2s linear infinite forwards"
               }
             }
           }

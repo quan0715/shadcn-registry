@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import animate from "tailwindcss-animate";
 export default {
   darkMode: ["class"],
   content: [
@@ -45,11 +45,29 @@ export default {
             opacity: "1",
           },
         },
+        "expand-bar-x": {
+          "0%, 100%": {
+            transform: "scaleX(0.05)",
+          },
+          "50%": {
+            transform: "scaleX(1)",
+          },
+        },
+        "expand-bar-y": {
+          "0%, 100%": {
+            transform: "scaleY(0.05)",
+          },
+          "50%": {
+            transform: "scaleY(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "expand-bar": "expand-bar 0.4s ease-out forwards",
+        "expand-bar": "expand-bar 0.3s ease-out forwards",
+        "loading-bar-x": "expand-bar-x 2s linear infinite forwards",
+        "loading-bar-y": "expand-bar-y 2s linear infinite forwards",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -93,5 +111,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 } satisfies Config;
