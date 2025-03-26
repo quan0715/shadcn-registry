@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "Running registry:build before commit..."
+echo "Running registry:build before push..."
 pnpm registry:build
 
 echo "Running component tests..."
 pnpm test:component
 
 echo "Building project..."
-pnpm build
+pnpm build 
