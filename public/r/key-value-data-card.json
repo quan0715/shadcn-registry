@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "key-value-data-card",
+  "type": "registry:component",
+  "title": "Key Value Data Card",
+  "description": "A key value data card",
+  "files": [
+    {
+      "path": "registry/new-york/key-value-data-card/key-value-data-card.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport { ReactNode } from \"react\";\nimport React from \"react\";\n\ninterface KeyValueDataCardProps {\n  orientation?: \"horizontal\" | \"vertical\";\n  className?: string;\n  children?: ReactNode;\n}\n\ninterface KeyProps {\n  children: ReactNode;\n  className?: string;\n}\n\ninterface ValueProps {\n  children: ReactNode;\n  className?: string;\n}\n\ninterface ActionProps {\n  children: ReactNode;\n  className?: string;\n}\n\nfunction Key({ children, className }: KeyProps) {\n  return (\n    <p className={cn(\"text-sm font-normal text-muted-foreground\", className)}>\n      {children}\n    </p>\n  );\n}\n\nfunction Value({ children, className }: ValueProps) {\n  return <p className={cn(\"font-semibold text-sm\", className)}>{children}</p>;\n}\n\nfunction Action({ children, className }: ActionProps) {\n  return (\n    <div className={cn(\"flex items-center shrink-0\", className)}>\n      {children}\n    </div>\n  );\n}\n\nexport function KeyValueDataCard({\n  orientation = \"vertical\",\n  className,\n  children,\n}: KeyValueDataCardProps) {\n  const isHorizontal = orientation === \"horizontal\";\n  const innerPadding = \"p-4\";\n  const rounded = \"rounded-lg\";\n  const border = \"border\";\n\n  // accept only one Key and one Value\n  const keyChildren = React.Children.toArray(children).filter(\n    (child: ReactNode) => React.isValidElement(child) && child.type === Key\n  );\n\n  if (keyChildren.length < 1) {\n    throw new Error(\"KeyValueDataCard must have at least one Key component\");\n  }\n\n  if (keyChildren.length > 1) {\n    throw new Error(\"KeyValueDataCard must have only one Key component\");\n  }\n\n  const valueChildren = React.Children.toArray(children).filter(\n    (child: ReactNode) => React.isValidElement(child) && child.type === Value\n  );\n\n  if (valueChildren.length < 1) {\n    throw new Error(\"KeyValueDataCard must have at least one Value component\");\n  }\n\n  if (valueChildren.length > 1) {\n    throw new Error(\"KeyValueDataCard must have only one Value component\");\n  }\n\n  const actionChildren = React.Children.toArray(children).filter(\n    (child: ReactNode) => React.isValidElement(child) && child.type === Action\n  );\n  // action is optional\n  if (actionChildren.length && actionChildren.length > 1) {\n    throw new Error(\"KeyValueDataCard must have only one Action component\");\n  }\n\n  return (\n    <div\n      className={cn(\n        border,\n        rounded,\n        \"min-w-[250px]\",\n        \"flex gap-0 overflow-hidden group relative\",\n        isHorizontal ? \"flex-row items-stretch\" : \"flex-col\",\n        className\n      )}\n    >\n      <div\n        className={cn(\n          isHorizontal ? \"w-[5px]\" : \"h-[5px] w-full\",\n          \"bg-primary shrink-0\",\n          \"origin-center\",\n          \"animate-expand-bar\",\n          \"transition-all duration-500\",\n          \"group-hover:bg-primary/80\",\n          isHorizontal ? \"group-hover:w-[8px]\" : \"group-hover:h-[8px]\"\n        )}\n      />\n      <div className={cn(innerPadding, \"flex flex-1\")}>\n        <div className=\"flex flex-col gap-1\">\n          {keyChildren[0]}\n          {valueChildren[0]}\n        </div>\n        {actionChildren.length > 0 && (\n          <div className=\"flex items-center ml-auto\">\n            {actionChildren.map((child, index) => (\n              <React.Fragment key={index}>{child}</React.Fragment>\n            ))}\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n\nKeyValueDataCard.Key = Key;\nKeyValueDataCard.Value = Value;\nKeyValueDataCard.Action = Action;\n\nexport { Key, Value, Action };\n",
+      "type": "registry:component"
+    }
+  ],
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          "keyframes": {
+            "expand-bar": {
+              "0%": {
+                "transform": "scaleX(0.3) scaleY(0.3)",
+                "opacity": "0"
+              },
+              "100%": {
+                "transform": "scaleX(1) scaleY(1)",
+                "opacity": "1"
+              }
+            }
+          },
+          "animation": {
+            "expand-bar": "expand-bar 0.4s ease-out forwards"
+          }
+        }
+      }
+    }
+  }
+}
