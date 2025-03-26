@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import React from "react";
@@ -32,7 +33,7 @@ function Key({ children, className }: KeyProps) {
 }
 
 function Value({ children, className }: ValueProps) {
-  return <p className={cn("font-semibold text-sm", className)}>{children}</p>;
+  return <p className={cn("font-semibold text-2xl", className)}>{children}</p>;
 }
 
 function Action({ children, className }: ActionProps) {
@@ -103,7 +104,7 @@ export function KeyValueDataCard({
           "bg-primary shrink-0",
           "origin-center",
           "animate-expand-bar",
-          "transition-all duration-500",
+          "transition-all duration-300",
           "group-hover:bg-primary/80",
           isHorizontal ? "group-hover:w-[8px]" : "group-hover:h-[8px]"
         )}

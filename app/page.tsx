@@ -48,7 +48,7 @@ export default function Home() {
 
 function ComponentDisplayCard({
   title,
-  description,
+  // description,
   children,
   name,
 }: {
