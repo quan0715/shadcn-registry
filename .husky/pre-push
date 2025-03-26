@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running registry:build before push..."
+npm run registry:build
+
+echo "Running component tests..."
+npm run test:component
+
+echo "Building project..."
+npm run build 

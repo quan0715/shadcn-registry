@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { OpenInV0Button } from "@/components/open-in-v0-button";
 import {
@@ -5,7 +6,7 @@ import {
   Key,
   Value,
   Action,
-} from "@/components/key-value-data-card";
+} from "@/registry/new-york/key-value-data-card/key-value-data-card";
 import { CalendarIcon } from "lucide-react";
 export default function Home() {
   return (
@@ -32,6 +33,24 @@ export default function Home() {
             </Action>
           </KeyValueDataCard>
           <KeyValueDataCard orientation="horizontal">
+            <Key>表單建立時間</Key>
+            <Value>2025 / 3 /29</Value>
+            <Action>
+              <div className="p-2 rounded-full bg-primary">
+                <CalendarIcon className="w-4 h-4 text-white" />
+              </div>
+            </Action>
+          </KeyValueDataCard>
+          <KeyValueDataCard orientation="vertical" isLoading={true}>
+            <Key>表單建立時間</Key>
+            <Value>2025 / 3 /29</Value>
+            <Action>
+              <div className="p-2 rounded-full bg-primary">
+                <CalendarIcon className="w-4 h-4 text-white" />
+              </div>
+            </Action>
+          </KeyValueDataCard>
+          <KeyValueDataCard orientation="horizontal" isLoading={true}>
             <Key>表單建立時間</Key>
             <Value>2025 / 3 /29</Value>
             <Action>

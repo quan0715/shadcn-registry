@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import React from "react";
@@ -7,6 +8,7 @@ interface KeyValueDataCardProps {
   orientation?: "horizontal" | "vertical";
   className?: string;
   children?: ReactNode;
+  isLoading?: boolean;
 }
 
 interface KeyProps {
@@ -25,15 +27,17 @@ interface ActionProps {
 }
 
 function Key({ children, className }: KeyProps) {
+  // key default font size is sm
   return (
-    <p className={cn("text-sm font-normal text-muted-foreground", className)}>
+    <p className={cn("text-xs font-normal text-muted-foreground", className)}>
       {children}
     </p>
   );
 }
 
 function Value({ children, className }: ValueProps) {
-  return <p className={cn("font-semibold text-2xl", className)}>{children}</p>;
+  // value default font size is sm
+  return <p className={cn("font-semibold text-sm", className)}>{children}</p>;
 }
 
 function Action({ children, className }: ActionProps) {
@@ -44,10 +48,24 @@ function Action({ children, className }: ActionProps) {
   );
 }
 
+function Skeleton() {
+  return (
+    <div className="w-full flex flex-col gap-2 animate-pulse">
+      <div className="h-7 w-24 bg-muted rounded" />
+      <div className="h-4 w-32 bg-muted rounded" />
+    </div>
+  );
+}
+
+function ActionSkeleton() {
+  return <div className="h-8 w-8 bg-muted rounded-2xl animate-pulse" />;
+}
+
 export function KeyValueDataCard({
   orientation = "vertical",
   className,
   children,
+  isLoading = false,
 }: KeyValueDataCardProps) {
   const isHorizontal = orientation === "horizontal";
   const innerPadding = "p-4";
@@ -59,33 +77,42 @@ export function KeyValueDataCard({
     (child: ReactNode) => React.isValidElement(child) && child.type === Key
   );
 
-  if (keyChildren.length < 1) {
-    throw new Error("KeyValueDataCard must have at least one Key component");
-  }
+  if (!isLoading) {
+    if (keyChildren.length < 1) {
+      throw new Error("KeyValueDataCard must have at least one Key component");
+    }
 
-  if (keyChildren.length > 1) {
-    throw new Error("KeyValueDataCard must have only one Key component");
+    if (keyChildren.length > 1) {
+      throw new Error("KeyValueDataCard must have only one Key component");
+    }
   }
 
   const valueChildren = React.Children.toArray(children).filter(
     (child: ReactNode) => React.isValidElement(child) && child.type === Value
   );
 
-  if (valueChildren.length < 1) {
-    throw new Error("KeyValueDataCard must have at least one Value component");
-  }
+  if (!isLoading) {
+    if (valueChildren.length < 1) {
+      throw new Error(
+        "KeyValueDataCard must have at least one Value component"
+      );
+    }
 
-  if (valueChildren.length > 1) {
-    throw new Error("KeyValueDataCard must have only one Value component");
+    if (valueChildren.length > 1) {
+      throw new Error("KeyValueDataCard must have only one Value component");
+    }
   }
 
   const actionChildren = React.Children.toArray(children).filter(
     (child: ReactNode) => React.isValidElement(child) && child.type === Action
   );
   // action is optional
-  if (actionChildren.length && actionChildren.length > 1) {
+  if (!isLoading && actionChildren.length > 1) {
     throw new Error("KeyValueDataCard must have only one Action component");
   }
+  useEffect(() => {
+    console.log("isLoading", isLoading);
+  }, [isLoading]);
 
   return (
     <div
@@ -102,23 +129,34 @@ export function KeyValueDataCard({
         className={cn(
           isHorizontal ? "w-[5px]" : "h-[5px] w-full",
           "bg-primary shrink-0",
-          "origin-center",
-          "animate-expand-bar",
-          "transition-all duration-300",
-          "group-hover:bg-primary/80",
-          isHorizontal ? "group-hover:w-[8px]" : "group-hover:h-[8px]"
+          !isLoading ? "group-hover:bg-primary/80" : "",
+          isLoading
+            ? isHorizontal
+              ? "animate-loading-bar-y"
+              : "animate-loading-bar-x"
+            : ""
         )}
+        data-cy="key-value-data-card-bar"
       />
-      <div className={cn(innerPadding, "flex flex-1")}>
-        <div className="flex flex-col gap-1">
-          {keyChildren[0]}
-          {valueChildren[0]}
-        </div>
-        {actionChildren.length > 0 && (
+      <div
+        className={cn(
+          innerPadding,
+          "flex flex-1 gap-1 justify-between items-center"
+        )}
+      >
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <div className="flex flex-col gap-0">
+            {keyChildren[0] && keyChildren[0]}
+            {valueChildren[0] && valueChildren[0]}
+          </div>
+        )}
+        {isLoading ? (
+          <ActionSkeleton />
+        ) : (
           <div className="flex items-center ml-auto">
-            {actionChildren.map((child, index) => (
-              <React.Fragment key={index}>{child}</React.Fragment>
-            ))}
+            {actionChildren[0] && actionChildren[0]}
           </div>
         )}
       </div>
