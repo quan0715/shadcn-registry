@@ -55,6 +55,18 @@
           }
         }
       }
+    },
+    {
+      "name": "menu",
+      "type": "registry:component",
+      "title": "Menu",
+      "description": "A menu component",
+      "files": [
+        {
+          "path": "registry/new-york/menu/menu.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

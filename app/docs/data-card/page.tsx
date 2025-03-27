@@ -8,15 +8,14 @@ import {
   Action,
 } from "@/registry/new-york/key-value-data-card/key-value-data-card";
 import { CalendarIcon } from "lucide-react";
-export default function Home() {
+import { ComponentHeader } from "@/components/document/ComponentPage";
+export default function Page() {
   return (
-    <div className="max-w-3xl mx-auto flex flex-col min-h-svh px-4 py-8 gap-8">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight">Custom Registry</h1>
-        <p className="text-muted-foreground">
-          A custom registry for distribution code using shadcn.
-        </p>
-      </header>
+    <div className="flex flex-col gap-8">
+      <ComponentHeader
+        title="Data Card"
+        description="A data card component for the new york registry"
+      />
       <main className="flex flex-col flex-1 gap-8">
         <ComponentDisplayCard
           title="Key Value Data Card - Vertical"
@@ -28,7 +27,7 @@ export default function Home() {
             <Value>2025 / 3 /29</Value>
             <Action>
               <div className="p-2 rounded-full bg-primary">
-                <CalendarIcon className="w-4 h-4 text-primary" />
+                <CalendarIcon className="w-4 h-4 text-white" />
               </div>
             </Action>
           </KeyValueDataCard>
@@ -37,7 +36,7 @@ export default function Home() {
             <Value>2025 / 3 /29</Value>
             <Action>
               <div className="p-2 rounded-full bg-primary">
-                <CalendarIcon className="w-4 h-4 text-primary" />
+                <CalendarIcon className="w-4 h-4 text-white" />
               </div>
             </Action>
           </KeyValueDataCard>
@@ -46,7 +45,7 @@ export default function Home() {
             <Value>2025 / 3 /29</Value>
             <Action>
               <div className="p-2 rounded-full bg-primary">
-                <CalendarIcon className="w-4 h-4 text-foreground" />
+                <CalendarIcon className="w-4 h-4 text-white" />
               </div>
             </Action>
           </KeyValueDataCard>
@@ -55,7 +54,7 @@ export default function Home() {
             <Value>2025 / 3 /29</Value>
             <Action>
               <div className="p-2 rounded-full bg-primary">
-                <CalendarIcon className="w-4 h-4 text-primary" />
+                <CalendarIcon className="w-4 h-4 text-white" />
               </div>
             </Action>
           </KeyValueDataCard>
